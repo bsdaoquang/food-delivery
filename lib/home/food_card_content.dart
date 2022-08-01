@@ -23,70 +23,64 @@ class FoodCardContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        TitleText(
+          text: 'Chinese Side',
+          size: 20,
+        ),
+       const SizedBox(height: 15,),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Icon(Icons.star, color: AppColors.mainColor, size: 16,),
+                Icon(Icons.star, color: AppColors.mainColor, size: 16,),
+                Icon(Icons.star, color: AppColors.mainColor, size: 16,),
+                Icon(Icons.star, color: AppColors.mainColor, size: 16,),
+                Icon(Icons.star, color: AppColors.mainColor, size: 16,),
 
-      decoration: BoxDecoration(
+                DescText(text: '$starCount'),
+              ],
+            ),
 
-      ),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          TitleText(
-            text: 'Chinese Side',
-            size: 18,
-          ),
-
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Icon(Icons.star, color: AppColors.mainColor, size: 16,),
-                  Icon(Icons.star, color: AppColors.mainColor, size: 16,),
-                  Icon(Icons.star, color: AppColors.mainColor, size: 16,),
-                  Icon(Icons.star, color: AppColors.mainColor, size: 16,),
-                  Icon(Icons.star, color: AppColors.mainColor, size: 16,),
-
-                  DescText(text: '$starCount'),
-                ],
-              ),
-
-              DescText(text: '$commentCount comments'),
-            ],
-          ),
-
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Wrap(
-                crossAxisAlignment: WrapCrossAlignment.center,
-                children: [
-                  Icon(Icons.circle, color: Colors.orange, size: 20,),
-                  DescText(text: rate),
-                ],
-              ),
-              Wrap(
-                crossAxisAlignment: WrapCrossAlignment.center,
-                children: [
-                  Icon(Icons.location_pin, color: Colors.redAccent, size: 20,),
-                  DescText(text: distance),
-                ],
-              ),
-              Wrap(
-                crossAxisAlignment: WrapCrossAlignment.center,
-                children: [
-                  Icon(Icons.timer_outlined, color: Colors.orange, size: 20,),
-                  DescText(text: time)
-                ],
-              )
-            ],
-          ),
-        ],
-      ),
+            DescText(text: '$commentCount comments'),
+          ],
+        ),
+        const SizedBox(height: 15,),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Wrap(
+              crossAxisAlignment: WrapCrossAlignment.center,
+              children: [
+                const Icon(Icons.circle, color: Colors.orange, size: 20,),
+                DescText(text: rate),
+              ],
+            ),
+            Wrap(
+              crossAxisAlignment: WrapCrossAlignment.center,
+              children: [
+                const Icon(Icons.location_pin, color: Colors.redAccent, size: 20,),
+                DescText(text: distance),
+              ],
+            ),
+            Wrap(
+              crossAxisAlignment: WrapCrossAlignment.center,
+              children: [
+                const Icon(Icons.timer_outlined, color: Colors.orange, size: 20,),
+                DescText(text: time)
+              ],
+            )
+          ],
+        ),
+      ],
     );
   }
 }
