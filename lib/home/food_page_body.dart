@@ -1,3 +1,4 @@
+import 'package:dots_indicator/dots_indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_learning/constants/app_colors.dart';
 import 'package:flutter_learning/home/food_card_content.dart';
@@ -14,6 +15,7 @@ class _FoodPageBodyState extends State<FoodPageBody> {
   PageController pageController = PageController(viewportFraction: 0.85);
   var _currPageValue = 0.0;
   double _scaleFactor = 0.8;
+  double _height = 220;
 
   //khởi tạo giá trị
   //Lấy giá trị màn hình hiện tại
@@ -35,25 +37,48 @@ class _FoodPageBodyState extends State<FoodPageBody> {
 
   @override
   Widget build(BuildContext) {
-    return Container(
-      height: 300,
-      child: PageView.builder(controller: pageController, itemCount: 5, itemBuilder: (context, position){
-        return _buildPageItem(position);
-      }),
+    return Column(
+      children: [
+        Container(
+          height: 300,
+          child: PageView.builder(controller: pageController, itemCount: 5, itemBuilder: (context, position){
+            return _buildPageItem(position);
+          }),
+        ),
+    new DotsIndicator(
+    dotsCount: 5,
+    position: _currPageValue,
+    decorator: DotsDecorator(
+    size: const Size.square(9.0),
+    activeSize: const Size(18.0, 9.0),
+    activeShape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5.0)),
+    ),
+    )
+      ],
     );
   }
 
   Widget _buildPageItem (int index){
 
-    //chưa biết dùng để làm gì
+    //Phần này dùng để tạo hiệu ứng animation và chuyển động khi thay đổi màn hình
+    //và co nhỏ màn hình 2 bên
     Matrix4 matrix = new Matrix4.identity();
 
     if(index == _currPageValue.floor()){
       var currScale = 1 - (_currPageValue - index) * (1 - _scaleFactor);
-      matrix = Matrix4.diagonal3Values(1, currScale, 1);
+      var currTrans = _height * (1 - currScale)/2;
+      matrix = Matrix4.diagonal3Values(1, currScale, 1)..setTranslationRaw(0, currTrans, 0);
     }else if(index == _currPageValue.floor() + 1){
       var currScale = _scaleFactor + (_currPageValue - index + 1) * (1 - _scaleFactor);
-      matrix = Matrix4.diagonal3Values(1, currScale, 1);
+      var currTrans = _height * (1 - currScale)/2;
+      matrix = Matrix4.diagonal3Values(1, currScale, 1)..setTranslationRaw(0, currTrans, 0);
+    }else if(index == _currPageValue.floor() - 1){
+      var currScale = 1 - (_currPageValue - index) * (1 - _scaleFactor);
+      var currTrans = _height * (1 - currScale)/2;
+      matrix = Matrix4.diagonal3Values(1, currScale, 1)..setTranslationRaw(0, currTrans, 0);
+    }else{
+      var currScale = 0.8;
+      matrix = Matrix4.diagonal3Values(1, currScale, 1)..setTranslationRaw(1, _height * (1 - _scaleFactor) / 2, 1);
     }
 
     return Transform(
@@ -86,6 +111,16 @@ class _FoodPageBodyState extends State<FoodPageBody> {
                   color: Colors.black38,
                   blurRadius: 8,
                   offset: Offset(0, 2)
+                ),
+                
+                //Phần offset này giúp loại bỏ cạnh bên
+                BoxShadow(
+                  color: Colors.white,
+                  offset: Offset(-5, 0)
+                ),
+                BoxShadow(
+                  color: Colors.white,
+                  offset: Offset(5, 0)
                 )
               ]
             ),
